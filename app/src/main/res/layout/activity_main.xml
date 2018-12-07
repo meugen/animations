@@ -26,6 +26,29 @@
             android:layout_margin="@dimen/default_margin"
             android:background="?selectableItemBackground"/>
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:id="@+id/fade_views_1_view"
+                android:background="?selectableItemBackground"
+                app:srcCompat="@drawable/baseline_call_96"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:id="@+id/fade_views_2_view"
+                android:background="?selectableItemBackground"
+                app:srcCompat="@drawable/baseline_call_end_96"
+                android:visibility="gone"/>
+
+        </FrameLayout>
+
     </LinearLayout>
 
 </ScrollView>

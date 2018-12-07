@@ -1,5 +1,6 @@
 package meugeninua.animations;
 
+import android.animation.Animator;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
@@ -13,6 +14,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageButton animationDrawableView;
     private ImageButton animatedVectorView;
+    private ImageButton fadeViewsFirst;
+    private ImageButton fadeViewsSecond;
 
     private AnimationDrawable animationDrawable;
     private AnimatedVectorDrawableCompat animatedVectorDrawable;
@@ -31,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         animatedVectorView = findViewById(R.id.animated_vector_view);
         animatedVectorView.setImageDrawable(animatedVectorDrawable);
         animatedVectorView.setOnClickListener(this);
+        fadeViewsFirst = findViewById(R.id.fade_views_1_view);
+        fadeViewsFirst.setOnClickListener(this);
+        fadeViewsSecond = findViewById(R.id.fade_views_2_view);
+        fadeViewsSecond.setOnClickListener(this);
     }
 
     @Override
@@ -40,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             animateAnimationDrawable();
         } else if (id == R.id.animated_vector_view) {
             animateAnimatedVector();
+        } else if (id == R.id.fade_views_1_view) {
+            animateFadeViews(false);
+        } else if (id == R.id.fade_views_2_view) {
+            animateFadeViews(true);
         }
     }
 
@@ -57,6 +68,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         animatedVectorView.setImageDrawable(animatedVectorDrawable);
         animatedVectorView.setTag(!isBack);
         animatedVectorDrawable.start();
+    }
+
+    private void animateFadeViews(boolean isBack) {
+        final View fadeInView, fadeOutView;
+        if (isBack) {
+            fadeInView = fadeViewsFirst;
+            fadeOutView = fadeViewsSecond;
+        } else {
+            fadeInView = fadeViewsSecond;
+            fadeOutView = fadeViewsFirst;
+        }
+
+        fadeInView.setAlpha(0);
+        fadeInView.setVisibility(View.VISIBLE);
+        fadeOutView.setAlpha(1);
+        fadeOutView.setVisibility(View.VISIBLE);
+
+        long duration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        fadeInView.animate()
+                .alpha(1)
+                .setDuration(duration)
+                .setListener(null);
+        fadeOutView.animate()
+                .alpha(0)
+                .setDuration(duration)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) { }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        fadeOutView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) { }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) { }
+                });
     }
 
     private AnimationDrawable createAnimationDrawable(boolean isBack) {
@@ -89,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int item : items) {
             drawable.addFrame(
                     VectorDrawableCompat.create(resources, item, getTheme()),
-                    resources.getInteger(R.integer.short_duration));
+                    resources.getInteger(android.R.integer.config_shortAnimTime));
         }
         return drawable;
     }
