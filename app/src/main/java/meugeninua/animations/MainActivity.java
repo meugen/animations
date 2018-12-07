@@ -1,6 +1,7 @@
 package meugeninua.animations;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
@@ -93,20 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fadeOutView.animate()
                 .alpha(0)
                 .setDuration(duration)
-                .setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) { }
-
+                .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         fadeOutView.setVisibility(View.GONE);
                     }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) { }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) { }
                 });
     }
 
