@@ -1,54 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/default_margin"
+        app:srcCompat="@drawable/baseline_android_96"
+        android:id="@+id/android"/>
 
-        <ImageButton
-            android:id="@+id/animation_drawable_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:background="?selectableItemBackground"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
-        <ImageButton
-            android:id="@+id/animated_vector_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:background="?selectableItemBackground"/>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:id="@+id/fade_views_1_view"
-                android:background="?selectableItemBackground"
-                app:srcCompat="@drawable/baseline_call_96"/>
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:id="@+id/fade_views_2_view"
-                android:background="?selectableItemBackground"
-                app:srcCompat="@drawable/baseline_call_end_96"
-                android:visibility="gone"/>
-
-        </FrameLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

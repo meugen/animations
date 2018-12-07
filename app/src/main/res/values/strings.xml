@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Animations</string>
+
+    <string name="title_drawables">Drawables</string>
 </resources>

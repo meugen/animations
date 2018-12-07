@@ -1,144 +1,47 @@
 package meugeninua.animations;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.content.res.Resources;
-import android.graphics.drawable.AnimationDrawable;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
-import android.support.graphics.drawable.VectorDrawableCompat;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements MainAdapter.OnClickActivityListener {
 
-    private ImageButton animationDrawableView;
-    private ImageButton animatedVectorView;
-    private ImageButton fadeViewsFirst;
-    private ImageButton fadeViewsSecond;
-
-    private AnimationDrawable animationDrawable;
-    private AnimatedVectorDrawableCompat animatedVectorDrawable;
+    private ImageView androidView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        animationDrawable = createAnimationDrawable(false);
-        animatedVectorDrawable = createAnimatedVectorDrawable(false);
+        androidView = findViewById(R.id.android);
 
-        animationDrawableView = findViewById(R.id.animation_drawable_view);
-        animationDrawableView.setImageDrawable(animationDrawable);
-        animationDrawableView.setOnClickListener(this);
-        animatedVectorView = findViewById(R.id.animated_vector_view);
-        animatedVectorView.setImageDrawable(animatedVectorDrawable);
-        animatedVectorView.setOnClickListener(this);
-        fadeViewsFirst = findViewById(R.id.fade_views_1_view);
-        fadeViewsFirst.setOnClickListener(this);
-        fadeViewsSecond = findViewById(R.id.fade_views_2_view);
-        fadeViewsSecond.setOnClickListener(this);
+        RecyclerView recyclerView = findViewById(R.id.recycler);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(new MainAdapter(this, this));
     }
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.animation_drawable_view) {
-            animateAnimationDrawable();
-        } else if (id == R.id.animated_vector_view) {
-            animateAnimatedVector();
-        } else if (id == R.id.fade_views_1_view) {
-            animateFadeViews(false);
-        } else if (id == R.id.fade_views_2_view) {
-            animateFadeViews(true);
+    public void onClickActivity(int position) {
+        if (position == MainAdapter.DRAWABLES_POSITION) {
+            openDrawables();
         }
     }
 
-    private void animateAnimationDrawable() {
-        boolean isBack = Boolean.TRUE.equals(animationDrawableView.getTag());
-        animationDrawable = createAnimationDrawable(isBack);
-        animationDrawableView.setImageDrawable(animationDrawable);
-        animationDrawableView.setTag(!isBack);
-        animationDrawable.start();
-    }
-
-    private void animateAnimatedVector() {
-        boolean isBack = Boolean.TRUE.equals(animatedVectorView.getTag());
-        animatedVectorDrawable = createAnimatedVectorDrawable(isBack);
-        animatedVectorView.setImageDrawable(animatedVectorDrawable);
-        animatedVectorView.setTag(!isBack);
-        animatedVectorDrawable.start();
-    }
-
-    private void animateFadeViews(boolean isBack) {
-        final View fadeInView, fadeOutView;
-        if (isBack) {
-            fadeInView = fadeViewsFirst;
-            fadeOutView = fadeViewsSecond;
+    private void openDrawables() {
+        Intent intent = new Intent(this, DrawablesActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this, androidView, "android");
+            startActivity(intent, options.toBundle());
         } else {
-            fadeInView = fadeViewsSecond;
-            fadeOutView = fadeViewsFirst;
+            startActivity(intent);
         }
-
-        fadeInView.setAlpha(0);
-        fadeInView.setVisibility(View.VISIBLE);
-        fadeOutView.setAlpha(1);
-        fadeOutView.setVisibility(View.VISIBLE);
-
-        long duration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        fadeInView.animate()
-                .alpha(1)
-                .setDuration(duration)
-                .setListener(null);
-        fadeOutView.animate()
-                .alpha(0)
-                .setDuration(duration)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        fadeOutView.setVisibility(View.GONE);
-                    }
-                });
-    }
-
-    private AnimationDrawable createAnimationDrawable(boolean isBack) {
-        Resources resources = getResources();
-
-        int[] items;
-        if (isBack) {
-            items = new int[] {
-                    R.drawable.baseline_battery_full_96,
-                    R.drawable.baseline_battery_charging_full_96,
-                    R.drawable.baseline_battery_charging_90_96,
-                    R.drawable.baseline_battery_charging_80_96,
-                    R.drawable.baseline_battery_charging_60_96,
-                    R.drawable.baseline_battery_charging_50_96,
-                    R.drawable.baseline_battery_charging_30_96,
-                    R.drawable.baseline_battery_charging_20_96 };
-        } else {
-            items = new int[] {
-                    R.drawable.baseline_battery_charging_20_96,
-                    R.drawable.baseline_battery_charging_30_96,
-                    R.drawable.baseline_battery_charging_50_96,
-                    R.drawable.baseline_battery_charging_60_96,
-                    R.drawable.baseline_battery_charging_80_96,
-                    R.drawable.baseline_battery_charging_90_96,
-                    R.drawable.baseline_battery_charging_full_96,
-                    R.drawable.baseline_battery_full_96 };
-        }
-        AnimationDrawable drawable = new AnimationDrawable();
-        drawable.setOneShot(true);
-        for (int item : items) {
-            drawable.addFrame(
-                    VectorDrawableCompat.create(resources, item, getTheme()),
-                    resources.getInteger(android.R.integer.config_shortAnimTime));
-        }
-        return drawable;
-    }
-
-    private AnimatedVectorDrawableCompat createAnimatedVectorDrawable(boolean isBack) {
-        int drawableId = isBack ? R.drawable.animated_call_down : R.drawable.animated_call_up;
-        return AnimatedVectorDrawableCompat.create(this, drawableId);
     }
 }
