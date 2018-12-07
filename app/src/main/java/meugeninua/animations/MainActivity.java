@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AnimationDrawable drawable;
+    private AnimationDrawable animationDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +17,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageView imageView = findViewById(R.id.image);
-        drawable = createAnimationDrawable();
-        imageView.setImageDrawable(drawable);
+        animationDrawable = createAnimationDrawable();
+        imageView.setImageDrawable(animationDrawable);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        drawable.start();
+        animationDrawable.start();
     }
 
     private AnimationDrawable createAnimationDrawable() {
