@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@android:integer/config_shortAnimTime"
+    android:duration="@integer/animated_vector_drawable"
     android:propertyName="pathData"
     android:valueFrom="M20,4h-11v2h11z"
     android:valueTo="M4,20h2v-11h-2z"

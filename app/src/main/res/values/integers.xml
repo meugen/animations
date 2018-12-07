@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="short_duration">200</integer>
+    <integer name="animation_drawable_duration">@android:integer/config_shortAnimTime</integer>
+    <integer name="animated_vector_drawable">@android:integer/config_shortAnimTime</integer>
+    <integer name="fade_views_duration">@android:integer/config_shortAnimTime</integer>
 </resources>

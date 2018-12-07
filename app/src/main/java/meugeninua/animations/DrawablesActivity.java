@@ -86,7 +86,7 @@ public class DrawablesActivity extends AppCompatActivity implements View.OnClick
         fadeOutView.setAlpha(1);
         fadeOutView.setVisibility(View.VISIBLE);
 
-        long duration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        long duration = getResources().getInteger(R.integer.fade_views_duration);
         fadeInView.animate()
                 .alpha(1)
                 .setDuration(duration)
@@ -132,7 +132,7 @@ public class DrawablesActivity extends AppCompatActivity implements View.OnClick
         for (int item : items) {
             drawable.addFrame(
                     VectorDrawableCompat.create(resources, item, getTheme()),
-                    resources.getInteger(android.R.integer.config_shortAnimTime));
+                    resources.getInteger(R.integer.animation_drawable_duration));
         }
         return drawable;
     }
