@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/baseline_call_down_96">
+
+    <target
+        android:animation="@animator/call_vertical_arrow_up"
+        android:name="vertical_arrow"/>
+    <target
+        android:animation="@animator/call_horizontal_arrow_up"
+        android:name="horizontal_arrow"/>
+</animated-vector>
